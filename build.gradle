@@ -1,0 +1,50 @@
+plugins {
+    id "java"
+    id "maven-publish"
+}
+
+group "japandotorg"
+version "1.0"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly "com.google.code.gson:gson:2.8.9"
+}
+
+java {
+    sourceCompatibility = targetCompatibility = JavaVersion.VERSION_16
+
+    withSourcesJar()
+    withJavadocJar()
+}
+
+javadoc {
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
+
+publishing {
+    publications {
+        java(MavenPublication) {
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            name = "japandotorg-maven"
+            url = "https://maven.japandotorg.org"
+
+            credentials {
+                username = System.getenv("MAVEN_JAPANDOTORG_ALIAS")
+                password = System.getenv("MAVEN_JAPANDOTORG_TOKEN")
+            }
+
+            authentication {
+                basic(BasicAuthentication)
+            }
+        }
+    }
+}
