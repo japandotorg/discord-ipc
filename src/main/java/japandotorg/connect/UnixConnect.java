@@ -1,4 +1,4 @@
-package japandotorg.connection;
+package japandotorg.connect;
 
 import com.google.gson.JsonParser;
 import japandotorg.Opcode;
